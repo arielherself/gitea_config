@@ -1,0 +1,32 @@
+name: gitea-all
+services:
+    gitea:
+        ports:
+            - 3022:22
+            - 2333:3000
+        container_name: gitea
+        restart: always
+        volumes:
+            - type: volume
+              source: gitea
+              target: /data
+            - type: bind
+              source: /etc/timezone
+              target: /etc/timezone
+              read_only: true
+            - type: bind
+              source: /etc/localtime
+              target: /etc/localtime
+              read_only: true
+        image: gitea/gitea
+    backup:
+        image: offen/docker-volume-backup:v2
+        environment:
+            BACKUP_FILENAME: backup-%y-%m-%dT%H-%M-%S.tar.gz
+            BACKUP_LATEST_SYMLINK: backup-latest.tar.gz
+        volumes:
+            - gitea:/backup/my-app-backup:ro
+            - /var/run/docker.sock:/var/run/docker.sock:ro
+            - ./gitea-backups:/archive
+volumes:
+    gitea:
