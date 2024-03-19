@@ -24,6 +24,8 @@ services:
         environment:
             BACKUP_FILENAME: backup-%y-%m-%dT%H-%M-%S.tar.gz
             BACKUP_LATEST_SYMLINK: backup-latest.tar.gz
+            BACKUP_CRON_EXPRESSION: "0 */12 * * *"
+            BACKUP_RETENTION_DAYS: 7
         volumes:
             - gitea:/backup/my-app-backup:ro
             - /var/run/docker.sock:/var/run/docker.sock:ro
