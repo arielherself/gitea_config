@@ -1,1 +1,2 @@
-rclone sync -v --create-empty-src-dirs /$HOME/gitea/gitea-backups gd:/gitea-backups
+#!/bin/sh
+rclone sync -v --create-empty-src-dirs /root/gitea/gitea-backups gd:/gitea-backups
